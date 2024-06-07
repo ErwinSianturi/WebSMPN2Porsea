@@ -2,6 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guru;
+use App\Models\Kegiatan;
+use App\Models\Kelas;
+use App\Models\Pengumuman;
+use App\Models\Prestasi;
+use App\Models\Sekolah;
+use App\Models\Galeri;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Models\User;
@@ -11,6 +18,70 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     public function index()
+    {
+        $sekolah = Sekolah::latest()->first();
+$guru = Guru::where('jabatan', 'Kepala Sekolah')->first();
+$tatausaha = Guru::where('jabatan', '!=', 'Guru')
+                 ->orWhere('jabatan', 'Kepala Sekolah')
+                 ->get();
+
+$jumlah_kelas = Kelas::count();
+$jumlah_siswas = Kelas::sum('jumlah_siswa');
+$jumlah_guru = Guru::whereNotIn('jabatan', ['Tata Usaha', 'Kepala Sekolah'])->count();
+
+return view('template/index', compact('sekolah', 'guru', 'jumlah_kelas', 'tatausaha', 'jumlah_guru', 'jumlah_siswas'));
+
+    }
+    public function program()
+    {
+        $sekolah = Sekolah::latest()->first();
+        $guru = Guru::whereNotIn('jabatan', ['Tata Usaha', 'Kepala Sekolah'])->get();
+        $tatausaha = Guru::where('jabatan', 'Tata Usaha')->get();
+        $jumlah_kelas = Kelas::count();
+        $prestasi = Prestasi::get();
+        $kegiatan = Kegiatan::get();
+        // $jumlah_siswa = Siswa::count();
+        return view('template/program', compact('sekolah', 'guru','jumlah_kelas','tatausaha','prestasi','kegiatan'));
+    }
+    public function berita()
+    {
+        $sekolah = Sekolah::latest()->first();
+        $guru = Guru::whereNotIn('jabatan', ['Tata Usaha', 'Kepala Sekolah'])->get();
+        $tatausaha = Guru::where('jabatan', 'Tata Usaha')->get();
+        $jumlah_kelas = Kelas::count();
+        $pengumuman = Pengumuman::where('kategori', 'umum')->get();
+        $pengumuman1 = Pengumuman::where('kategori', 'psb')->get();
+        $kegiatan = Kegiatan::get();
+        // $jumlah_siswa = Siswa::count();
+        return view('template/berita', compact('sekolah', 'guru','jumlah_kelas','tatausaha','pengumuman','pengumuman1','kegiatan'));
+    }
+    public function galerii()
+{
+    $sekolah = Sekolah::latest()->first();
+    $galeri = Galeri::latest()->get();
+    return view('template/galeri', compact('sekolah','galeri'));
+}
+
+public function show($id)
+{
+    // Mendapatkan data pengumuman dengan ID yang diberikan
+    $sekolah = Sekolah::latest()->first();
+    $guru = Guru::where('jabatan', 'Kepala Sekolah')->first();
+    $tatausaha = Guru::where('jabatan', 'Tata Usaha')->get();
+    $jumlah_kelas = Kelas::count();
+    $jumlah_siswas = Kelas::sum('jumlah_siswa');
+    $jumlah_guru = Guru::whereNotIn('jabatan', ['Tata Usaha', 'Kepala Sekolah'])->count();
+    $pengumuman = Pengumuman::findOrFail($id);
+
+    return view('template/show', compact('sekolah', 'guru', 'jumlah_kelas', 'tatausaha', 'jumlah_guru', 'jumlah_siswas', 'pengumuman'));
+}
+
+
+
+
+
+
+    public function login()
     {
 
         return view('auth.login', [
@@ -39,29 +110,6 @@ class AuthController extends Controller
         }
     }
 
-    public function register()
-    {
-        return view('auth.register', [
-            'title' => 'Register',
-        ]);
-    }
-
-    public function process(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required',
-            'email' => 'required|unique:users',
-            'password' => 'required',
-            'passwordConfirm' => 'required|same:password'
-        ]);
-
-        $validated['password'] = Hash::make($request['password']);
-
-        $user = User::create($validated);
-
-        Alert::success('Success', 'Register user has been successfully !');
-        return redirect('/login');
-    }
 
     public function logout(Request $request)
     {

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $title }} | Andis Dev </title>
+    <title>{{ $title }}</title>
 
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -25,7 +25,7 @@
 
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="/" class="h1"><b>Andis</b> Dev</a>
+                <a href="/" class="h1"><b>SMP Negeri 2 PORSEA</a>
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
@@ -60,9 +60,10 @@
                         <div class="col-4">
                             <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                         </div>
-                        <p class="mb-0">
-                            <a href="/register" class="text-center">Register a new membership</a>
-                        </p>
+                        {{-- kembali ke home --}}
+                        <div class="col-12">
+                            <a href="/" class="btn btn-warning btn-block">Kembali ke Home</a>
+                        </div>
                     </div>
                 </form>
             </div>
