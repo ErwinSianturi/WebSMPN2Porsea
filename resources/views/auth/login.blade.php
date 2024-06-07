@@ -25,7 +25,7 @@
 
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
-                <a href="/" class="h1"><b>SMP Negeri 2 PORSEA</a>
+                <a href="/" class="h1"><b>SMP Negeri 2 PORSEAA</a>
             </div>
             <div class="card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
