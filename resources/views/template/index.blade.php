@@ -163,7 +163,7 @@
                     <div class="row mx-0 justify-content-center">
                         <div class="col-lg-10">
                             <div class="section-title text-center position-relative mb-5">
-                                <h1 class="display-4"> <span style="color: rgb(87, 84, 84);">Berkenalan </span> Lebih
+                                <h1 class="display-4"> Berkenalan  Lebih
                                     dalam</h1>
                                 <h6
                                     class="display-4 d-inline-block position-relative text-secondary text-uppercase pb-2">
